@@ -1,0 +1,850 @@
+/* 위젯별 스타일. 위젯마다 자기 구역 안에서만 고친다(TRD 5장 7번). */
+
+/* ===== 배경 (background) ===== */
+.background-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  height: 100%;
+}
+
+.background-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.background-swatch {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  border-radius: var(--radius-sm);
+  /* 크림처럼 밝은 배경도 카드 흰색과 구분되도록 얇은 테두리를 둔다 */
+  box-shadow: inset 0 0 0 1px var(--color-border);
+}
+
+.background-name {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* 현재 선택된 배경 테두리 표시(PRD 4.2) */
+.background-option.is-active .background-swatch {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.background-option.is-active .background-name {
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+/* ===== 활동 상태 (worksymbol) ===== */
+.card-worksymbol .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 교실 뒤에서도 보이도록 카드 대부분을 큰 표시 영역으로 쓴다 */
+.worksymbol-display {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--radius-md);
+  background: #f1f3f5;
+  transition: background 0.2s ease;
+}
+
+.worksymbol-display-icon {
+  font-size: 72px;
+  line-height: 1;
+}
+
+.worksymbol-display-label {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.worksymbol-display.is-empty .worksymbol-display-label {
+  font-size: 18px;
+  font-weight: normal;
+  color: var(--color-text-muted);
+}
+
+/* 상태마다 옅은 색을 달리해 멀리서도 구분되게 한다 */
+.worksymbol-display[data-state="quiet"] { background: #e7f0ff; }
+.worksymbol-display[data-state="whisper"] { background: #e6f7ee; }
+.worksymbol-display[data-state="group"] { background: #fff4db; }
+.worksymbol-display[data-state="question"] { background: #fde8ef; }
+
+.worksymbol-choices {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.worksymbol-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 2px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.worksymbol-choice-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.worksymbol-choice-label {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.worksymbol-choice.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+/* ===== 타이머 (timer) ===== */
+.card-timer .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 교실 뒤에서도 보이도록 크게, 숫자 폭이 흔들리지 않게 고정폭 숫자를 쓴다(TRD 4.1) */
+.timer-display {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 88px;
+  font-weight: bold;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -2px;
+  color: var(--color-text);
+}
+
+.timer-display.is-warning {
+  color: var(--color-warning);
+}
+
+.timer-settings {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.timer-input {
+  width: 42px;
+  height: 28px;
+  padding: 0 4px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: 14px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  /* 숫자 입력칸의 위아래 화살표는 좁은 칸을 더 좁게 만들어서 숨긴다 */
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.timer-input::-webkit-outer-spin-button,
+.timer-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.timer-input:disabled {
+  background: #f1f3f5;
+  color: var(--color-text-muted);
+}
+
+.timer-unit {
+  font-size: 13px;
+  margin-right: 4px;
+}
+
+.timer-quick {
+  display: flex;
+  gap: 3px;
+  margin-left: auto;
+}
+
+.timer-quick-button,
+.timer-button {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.timer-quick-button {
+  height: 28px;
+  padding: 0 6px;
+  font-size: 12px;
+}
+
+.timer-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.timer-button {
+  height: 38px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.timer-start {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.timer-quick-button:disabled,
+.timer-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 0이 되면 카드 전체가 깜빡인다(TRD 4.4) */
+.card.is-ringing {
+  animation: timer-ring 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes timer-ring {
+  from {
+    box-shadow: var(--shadow-card), 0 0 0 0 rgba(224, 49, 49, 0);
+    background: var(--color-surface);
+  }
+  to {
+    box-shadow: var(--shadow-card), 0 0 0 8px rgba(224, 49, 49, 0.6);
+    background: var(--color-warning-soft);
+  }
+}
+
+/* ===== 스톱워치 (stopwatch) ===== */
+.card-stopwatch .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stopwatch-display {
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 56px;
+  font-weight: bold;
+  line-height: 1.1;
+  /* 1/100초가 계속 바뀌어도 글자 폭이 흔들리지 않게 한다(TRD 4.1) */
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+}
+
+.stopwatch-controls {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.stopwatch-button {
+  height: 36px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.stopwatch-start {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.stopwatch-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 남은 높이를 모두 랩 목록에 주고, 넘치면 목록만 스크롤한다 */
+.stopwatch-lap-box {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.stopwatch-laps {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.stopwatch-lap-row {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1.4fr;
+  padding: 4px 10px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.stopwatch-laps .stopwatch-lap-row + .stopwatch-lap-row {
+  border-top: 1px solid var(--color-border);
+}
+
+.stopwatch-lap-head {
+  flex-shrink: 0;
+  background: #f1f3f5;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.stopwatch-lap-split,
+.stopwatch-lap-total {
+  text-align: right;
+}
+
+.stopwatch-laps-empty {
+  margin: auto;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+/* ===== 주사위 (dice) ===== */
+.card-dice .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dice-tray {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* 점 9칸(3×3)을 깔고 눈 값에 맞는 칸만 보인다(TRD 4.7) */
+.dice-face {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 96px;
+  height: 96px;
+  padding: 12px;
+  border: 2px solid #d0d5db;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 3px 0 #d0d5db;
+}
+
+.dice-face[hidden] {
+  display: none;
+}
+
+.dice-pip {
+  width: 18px;
+  height: 18px;
+  margin: auto;
+  border-radius: 50%;
+  background: var(--color-text);
+  visibility: hidden;
+}
+
+/* 칸 번호(1~9, 왼쪽 위부터 가로로)로 실제 주사위와 같은 배치를 만든다
+   1: 가운데 / 2: 대각선 / 3: 대각선+가운데 / 4: 네 모서리 / 5: 네 모서리+가운데 / 6: 왼쪽·오른쪽 세로 3개씩 */
+.dice-face[data-value="1"] .dice-pip:nth-child(5),
+.dice-face[data-value="2"] .dice-pip:nth-child(3),
+.dice-face[data-value="2"] .dice-pip:nth-child(7),
+.dice-face[data-value="3"] .dice-pip:nth-child(3),
+.dice-face[data-value="3"] .dice-pip:nth-child(5),
+.dice-face[data-value="3"] .dice-pip:nth-child(7),
+.dice-face[data-value="4"] .dice-pip:nth-child(1),
+.dice-face[data-value="4"] .dice-pip:nth-child(3),
+.dice-face[data-value="4"] .dice-pip:nth-child(7),
+.dice-face[data-value="4"] .dice-pip:nth-child(9),
+.dice-face[data-value="5"] .dice-pip:nth-child(1),
+.dice-face[data-value="5"] .dice-pip:nth-child(3),
+.dice-face[data-value="5"] .dice-pip:nth-child(5),
+.dice-face[data-value="5"] .dice-pip:nth-child(7),
+.dice-face[data-value="5"] .dice-pip:nth-child(9),
+.dice-face[data-value="6"] .dice-pip:nth-child(1),
+.dice-face[data-value="6"] .dice-pip:nth-child(3),
+.dice-face[data-value="6"] .dice-pip:nth-child(4),
+.dice-face[data-value="6"] .dice-pip:nth-child(6),
+.dice-face[data-value="6"] .dice-pip:nth-child(7),
+.dice-face[data-value="6"] .dice-pip:nth-child(9) {
+  visibility: visible;
+}
+
+/* 실제 주사위처럼 1의 눈은 빨갛고 크게 */
+.dice-face[data-value="1"] .dice-pip:nth-child(5) {
+  width: 26px;
+  height: 26px;
+  background: var(--color-warning);
+}
+
+.dice-face.is-rolling {
+  animation: dice-shake 0.16s ease-in-out infinite;
+}
+
+@keyframes dice-shake {
+  0% { transform: rotate(0deg) translate(0, 0); }
+  25% { transform: rotate(-12deg) translate(-3px, -2px); }
+  50% { transform: rotate(0deg) translate(0, -4px); }
+  75% { transform: rotate(12deg) translate(3px, -2px); }
+  100% { transform: rotate(0deg) translate(0, 0); }
+}
+
+.dice-result {
+  flex-shrink: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.dice-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.dice-count {
+  display: flex;
+  gap: 4px;
+}
+
+.dice-count-button,
+.dice-roll {
+  height: 38px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.dice-count-button {
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+.dice-count-button.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.dice-roll {
+  flex: 1;
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.dice-count-button:disabled,
+.dice-roll:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ===== 제비뽑기 (picker) ===== */
+.card-picker .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 당첨자 이름은 교실 뒤에서도 보이도록 남는 높이를 모두 쓴다 */
+.picker-result {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px;
+  border-radius: var(--radius-md);
+  background: #fff8e6;
+  overflow: hidden;
+  text-align: center;
+}
+
+.picker-result-name {
+  max-width: 100%;
+  font-weight: bold;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 인원이 많을수록 글자를 줄인다(TRD 4.6). 1명일 때는 교실 뒤에서도 보이는 88px(TRD 4.1) */
+.picker-result[data-count="1"] .picker-result-name { font-size: 88px; }
+.picker-result[data-count="2"] .picker-result-name { font-size: 52px; }
+.picker-result[data-count="3"] .picker-result-name { font-size: 38px; }
+.picker-result[data-count="4"] .picker-result-name { font-size: 30px; }
+.picker-result[data-count="5"] .picker-result-name { font-size: 25px; }
+
+.picker-result.is-message {
+  font-size: 18px;
+  color: var(--color-text-muted);
+}
+
+.picker-result[aria-busy="true"] .picker-result-name {
+  color: var(--color-text-muted);
+}
+
+.picker-options,
+.picker-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.picker-count {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.picker-count-label {
+  margin-right: 2px;
+  font-size: 13px;
+}
+
+.picker-count-button,
+.picker-exclude,
+.picker-refill,
+.picker-draw {
+  height: 30px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.picker-count-button {
+  width: 30px;
+  padding: 0;
+}
+
+.picker-exclude {
+  margin-left: auto;
+  padding: 0 8px;
+}
+
+/* 켜져 있을 때 체크 표시를 앞에 붙여 상태가 글자로도 보이게 한다 */
+.picker-exclude::before {
+  content: '☐ ';
+}
+
+.picker-exclude.is-active::before {
+  content: '☑ ';
+}
+
+.picker-count-button.is-active,
+.picker-exclude.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.picker-names {
+  flex-shrink: 0;
+  height: 96px;
+  padding: 6px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  resize: none;
+  font-family: var(--font-base);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.picker-names:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -1px;
+}
+
+.picker-names[readonly] {
+  background: #f1f3f5;
+}
+
+.picker-info {
+  flex: 1;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.picker-refill {
+  padding: 0 10px;
+}
+
+.picker-draw {
+  height: 36px;
+  padding: 0 22px;
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.picker-count-button:disabled,
+.picker-exclude:disabled,
+.picker-refill:disabled,
+.picker-draw:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ===== 그림판 (draw) ===== */
+.card-draw .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 카드 크기는 고정(520×440)이고 캔버스도 고정이라 남는 높이를 위아래로 나눠 가운데에 둔다 */
+  justify-content: center;
+  gap: 8px;
+}
+
+.draw-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.draw-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.draw-color {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 2px solid var(--color-surface);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--color-border);
+  cursor: pointer;
+}
+
+.draw-color.is-active {
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.draw-width,
+.draw-eraser,
+.draw-clear {
+  height: 30px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.draw-width {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  padding: 0;
+}
+
+.draw-width-dot {
+  border-radius: 50%;
+  background: var(--color-text);
+}
+
+.draw-eraser {
+  padding: 0 10px;
+}
+
+.draw-clear {
+  margin-left: auto;
+  padding: 0 10px;
+}
+
+.draw-width.is-active,
+.draw-eraser.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+/* 캔버스 자체는 투명하게 두고 흰색은 CSS로 깐다. 지우개가 배경까지 지우지 않게 하려는 것(TRD 4.9) */
+.draw-canvas {
+  flex-shrink: 0;
+  background: #ffffff;
+  /* border를 쓰면 border-box 때문에 그리는 영역이 480px보다 작아져 좌표가 어긋나므로 그림자로 테두리를 그린다 */
+  box-shadow: 0 0 0 1px #d0d5db;
+  border-radius: var(--radius-sm);
+  cursor: crosshair;
+  /* 없으면 터치 화면에서 그리는 대신 화면이 스크롤된다(PRD 4.8) */
+  touch-action: none;
+}
+
+.draw-canvas.is-erasing {
+  cursor: cell;
+}
+
+/* ===== 메모장 (note) ===== */
+.card-note .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.note-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.note-group {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.note-size-button,
+.note-clear {
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.note-size-button.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.note-color-button {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 2px solid var(--color-surface);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--color-border);
+  cursor: pointer;
+}
+
+/* 선택된 색은 바깥 고리를 진하게 그려 표시한다 */
+.note-color-button.is-active {
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.note-clear {
+  margin-left: auto;
+}
+
+/* 글자 색: 버튼 동그라미와 글자 색을 같은 값으로 맞춘다 */
+.note-swatch-black, .note-color-black { --note-color: #1f2933; }
+.note-swatch-red, .note-color-red { --note-color: #e03131; }
+.note-swatch-blue, .note-color-blue { --note-color: #1c64d6; }
+.note-swatch-green, .note-color-green { --note-color: #2b8a3e; }
+
+.note-color-button {
+  background: var(--note-color);
+}
+
+.note-text {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  /* 카드 크기가 고정이므로 사용자가 입력창 크기를 바꾸지 못하게 한다 */
+  resize: none;
+  font-family: var(--font-base);
+  line-height: 1.4;
+  color: var(--note-color);
+}
+
+.note-text:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -1px;
+}
+
+.note-size-s { font-size: 16px; }
+.note-size-m { font-size: 22px; }
+.note-size-l { font-size: 32px; }

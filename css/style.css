@@ -1,0 +1,208 @@
+/* 전체 레이아웃, 색 변수, 도구 모음, 카드 공통 */
+
+:root {
+  /* 색 */
+  --color-stage-default: linear-gradient(135deg, #89f7fe, #66a6ff);
+  --color-surface: #ffffff;
+  --color-surface-translucent: rgba(255, 255, 255, 0.92);
+  --color-text: #1f2933;
+  --color-text-muted: #616e7c;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-accent: #2f6fed;
+  --color-accent-soft: #e3ecff;
+  --color-warning: #e03131;
+  --color-warning-soft: #ffe3e3;
+
+  /* 모양 */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.18);
+  --shadow-toolbar: 0 6px 20px rgba(0, 0, 0, 0.22);
+
+  /* 글꼴: 외부 글꼴 금지(TRD 1장)라 시스템 글꼴만 쓴다 */
+  --font-base: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+
+  /* 도구 모음: 카드 끌기 범위 계산(drag.js)에서도 이 높이를 기준으로 삼는다 */
+  --toolbar-height: 72px;
+  --toolbar-gap: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 스크롤바가 생기지 않도록 화면 전체를 고정한다(PRD F-00-1) */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-base);
+  color: var(--color-text);
+}
+
+/* 키보드(Tab)로 이동할 때 현재 위치가 어떤 배경에서도 보이도록 굵은 테두리를 그린다.
+   마우스로 누를 때는 :focus-visible이 적용되지 않아 테두리가 생기지 않는다. */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* 마우스를 올린 버튼은 조금 어둡게 해서 누를 수 있다는 것을 알린다.
+   버튼마다 배경색이 달라도(흰색, 파랑, 색 동그라미) 같은 방식으로 보이도록 밝기만 바꾼다. */
+.card button:hover:not(:disabled),
+.toolbar-button:hover:not(:disabled) {
+  filter: brightness(0.94);
+}
+
+/* 스테이지: 화면 전체를 덮는 배경. 카드는 이 안에 absolute로 놓인다 */
+#stage {
+  position: fixed;
+  inset: 0;
+  background: var(--color-stage-default);
+  transition: background 0.3s ease;
+}
+
+/* 도구 모음: 하단 가운데 고정, 카드보다 항상 위(TRD 4.1) */
+#toolbar {
+  position: fixed;
+  left: 50%;
+  bottom: var(--toolbar-gap);
+  transform: translateX(-50%);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: var(--toolbar-height);
+  /* 버튼이 아직 없어도 도구 모음 모양이 보이도록 최소 너비를 둔다 */
+  min-width: 240px;
+  max-width: calc(100vw - 2 * var(--toolbar-gap));
+  padding: 8px 12px;
+  background: var(--color-surface-translucent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-toolbar);
+}
+
+/* 도구 모음 버튼: 아이콘 위, 한글 이름 아래(PRD F-00-2) */
+.toolbar-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 64px;
+  height: 100%;
+  padding: 4px 8px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.toolbar-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.toolbar-label {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* 열린 위젯의 버튼 강조(PRD F-00-3) */
+.toolbar-button.is-active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.toolbar-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 위젯 버튼과 전체 화면·초기화 버튼 사이 구분선 */
+.toolbar-divider {
+  align-self: stretch;
+  width: 1px;
+  margin: 4px 6px;
+  background: var(--color-border);
+}
+
+/* 두 번 눌러 확인하는 버튼의 대기 상태: 한 번 더 누르면 실행된다는 것을 색으로 알린다 */
+.is-confirming {
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+  font-weight: bold;
+}
+
+/* 카드 공통: 어떤 배경에서도 글자가 읽히도록 자체 배경색을 가진다(PRD 4.2) */
+.card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0 6px 0 14px;
+  background: var(--color-accent-soft);
+  border-bottom: 1px solid var(--color-border);
+  user-select: none;
+  cursor: grab;
+  /* 없으면 터치 화면에서 끌기 대신 화면 스크롤이 된다(TRD 4.2) */
+  touch-action: none;
+}
+
+.card.is-dragging .card-header {
+  cursor: grabbing;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 16px;
+}
+
+.card-close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.card-close:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--color-text);
+}
+
+.card-body {
+  flex: 1;
+  min-height: 0;
+  padding: 12px 14px;
+  overflow: hidden;
+}
